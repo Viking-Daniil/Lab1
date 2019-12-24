@@ -4,8 +4,8 @@
 #include <stdio.h>//h-заголовок для функции fflush(stdin), очищающей входной поток
 #include <iostream>
 #include <stdlib.h>//очистка экрана
-#define NUM 7// Количество элементов массива объектов
-#define NUMO 5// Количество элементов массива оценок
+#define NUM 3// Количество элементов массива объектов
+#define NUMO 2// Количество элементов массива оценок
 //#include <cstring>
 //#include <string.h>//h-заголовок для работы со строками
 
@@ -163,13 +163,13 @@ void Student::disp(Student obj[])
 	}
 	return;
 }
-void Student::sortt(Student obj[])
+void Student::sortt(Student obj[]) // сортировка по алфавиту
 {
 	for (int j = 0; j < NUM -1; j++)
 	{
 		for (int i = 0; i < NUM - 1; i++)
 		{
-			if ((strcmp(obj[i].take_initials(), obj[i+1].take_initials()) > 0) && (strcmp(obj[i+1].take_initials(), " ") != 0) && (strcmp(obj[i].take_initials(), " ") != 0))
+			if(obj[i]< obj[i+1] )//if ((strcmp(obj[i].take_initials(), obj[i+1].take_initials()) > 0) && (strcmp(obj[i+1].take_initials(), " ") != 0) && (strcmp(obj[i].take_initials(), " ") != 0))
 			{
 				Student p;
 				p = obj[i];
@@ -180,17 +180,33 @@ void Student::sortt(Student obj[])
 	}
 	
 }
-Student &Student ::operator= (const Student &obj)
+Student &Student ::operator= (const Student &obj) //перегрузка присваивания
 {
-	long int size = strlen(obj.initials);
-	delete[] initials;
-	initials = NULL;
-	initials = new char[size + 1];
-	strcpy(initials, obj.initials);
-	for (int i = 0; i < 5; i++)
+	if (this == &obj)
 	{
-		A[i] = obj.A[i];
+		return *this;
 	}
-	number = obj.number;
-	return *this;
+	else
+	{
+		long int size = strlen(obj.initials);
+		delete[] initials;
+		initials = NULL;
+		initials = new char[size + 1];
+		strcpy(initials, obj.initials);
+		for (int i = 0; i < NUMO; i++)
+		{
+			A[i] = obj.A[i];
+		}
+		number = obj.number;
+		return *this;
+	}
+}
+bool operator< (const Student &d1, const Student &d2) //перегрузка сравнения (для сравнения по алфавиту поля инициалов)
+{
+			if ((strcmp(d1.initials, d2.initials) > 0) && (strcmp(d2.initials, " ") != 0) && (strcmp(d1.initials, " ") != 0))
+			{
+				return true;
+			}
+			else 
+				return false;
 }
