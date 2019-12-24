@@ -1,7 +1,7 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 #include <iostream>
-#define NUMO 5
+#define NUMO 2
 using namespace std;
 class Student
 {
@@ -27,6 +27,8 @@ public:
 
 	friend ostream &operator<<(ostream &os, Student &obj);//Перегрузка
 	friend istream &operator>>(istream &stream, Student &obj);
+
+	friend bool operator< (const Student &d1, const Student &d2);
 	Student& operator= (const Student &drob);
 
 	static void search_by_score(Student obj[]);//Статический метод
