@@ -180,6 +180,7 @@ void Student::sortt(Student obj[]) // сортировка по алфавиту
 	}
 	
 }
+
 Student &Student ::operator= (const Student &obj) //перегрузка присваивания
 {
 	if (this == &obj)
