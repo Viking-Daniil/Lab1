@@ -1,14 +1,10 @@
 #include "Student.h"
 #include <conio.h>//для _getch() 
-//#include < string.h > 
 #include <stdio.h>//h-заголовок для функции fflush(stdin), очищающей входной поток
 #include <iostream>
 #include <stdlib.h>//очистка экрана
-#define NUM 3// Количество элементов массива объектов
-#define NUMO 2// Количество элементов массива оценок
-//#include <cstring>
-//#include <string.h>//h-заголовок для работы со строками
-
+#define NUM_OF_OBJECTS 10// Количество элементов массива объектов
+#define NUM_OF_MARKS 5// Количество элементов массива оценок
 using namespace std;
 
 void Student::set_initials(char *data)
@@ -22,10 +18,10 @@ void Student::set_initials(char *data)
 }
 void Student::set_score2(int a)
 {
-	int p;
-	cin >> p;
+	int mark;
+	cin >> mark;
 	A[a] = 0;
-	A[a] = p;
+	A[a] = mark;
 	return;
 }
 void Student::set_number(char *data)
@@ -44,9 +40,9 @@ void Student::get_score2(void)
 {
 
 	cout << "Оценки студента: "  << "\n";
-	for (int i = 0; i < NUMO; i++)
+	for (int i = 0; i < NUM_OF_MARKS; i++)
 	{
-		cout<<A[i];
+		cout<<A[i] <<" ";
 	}
 	cout << "\n";
 	return;
@@ -62,7 +58,7 @@ Student::Student()
 	initials = new char[100];
 	*(initials + 0) = ' ';
 	*(initials + 1) = '\0';
-	for (int i = 0; i < NUMO; i++)
+	for (int i = 0; i < NUM_OF_MARKS; i++)
 	{
 		A[i] = 0;
 	}
@@ -72,7 +68,7 @@ Student::~Student()
 {
 	delete[] initials;
 	initials = NULL;
-	for (int i = 0; i < NUMO; i++)
+	for (int i = 0; i < NUM_OF_MARKS; i++)
 	{
 		A[i] = 0;
 	}
@@ -84,14 +80,16 @@ istream &operator>>(istream &stream, Student &obj)
 {
 	fflush(stdin);
 	char str[100];
+
 	int data_number;
 	int count = 0;
 	bool flag = true;
+	int choise2 = 0;
 	cout << "Введите ФИО студента:\n";
 	gets_s(str);
 	obj.set_initials(str);
 	cout << "Введите оценку студента:\n";
-	for (int i = 0; i < NUMO; i++)
+	for (int i = 0; i < NUM_OF_MARKS; i++)
 	{
 		obj.set_score2(i);
 	}
@@ -129,9 +127,9 @@ void Student::search_by_score(Student obj[])
 	int flag = 0;
 	char str[10];
 	_itoa(2, str, 10); //Выбор оценки
-	for (int i = 0; i < NUM; i++)
+	for (int i = 0; i < NUM_OF_OBJECTS; i++)
 	{
-		for (int j = 0; j < NUMO; j++)
+		for (int j = 0; j < NUM_OF_MARKS; j++)
 		{
 			if (strcmp(obj[i].take_score(j), str) == 0)
 			{
@@ -151,11 +149,14 @@ void Student::search_by_score(Student obj[])
 void Student::disp(Student obj[])
 {
 	int count = 1;
-	cout << "\t\t\t\ Информация о студентах (не больше " << NUM << " записей):\n\n";
-	for (int i = 0; i < NUM; i++)
+	cout << "\t\t\t\ Информация о студентах (не больше " << NUM_OF_OBJECTS << " записей):\n\n";
+	for (int i = 0; i < NUM_OF_OBJECTS; i++)
 	{
-		if (*obj[i].take_initials() == ' '&&*obj[i].take_score(i) == ' '&&obj[i].take_number() == 0)//Если запись пуста, не производить вывод
+		if (*obj[i].take_initials() == ' ' &&  obj[i].take_number() == 0)//Если запись пуста, не производить вывод
+		{
+			cout << "Запись о студенте отсутсвует\n";
 			continue;
+		}
 		cout << "----- " << count << " -----\n";
 		count++;
 		cout << obj[i];
@@ -165,9 +166,9 @@ void Student::disp(Student obj[])
 }
 void Student::sortt(Student obj[]) // сортировка по алфавиту
 {
-	for (int j = 0; j < NUM -1; j++)
+	for (int j = 0; j < NUM_OF_OBJECTS -1; j++)
 	{
-		for (int i = 0; i < NUM - 1; i++)
+		for (int i = 0; i < NUM_OF_OBJECTS - 1; i++)
 		{
 			if(obj[i]< obj[i+1] )//if ((strcmp(obj[i].take_initials(), obj[i+1].take_initials()) > 0) && (strcmp(obj[i+1].take_initials(), " ") != 0) && (strcmp(obj[i].take_initials(), " ") != 0))
 			{
@@ -180,7 +181,6 @@ void Student::sortt(Student obj[]) // сортировка по алфавиту
 	}
 	
 }
-
 Student &Student ::operator= (const Student &obj) //перегрузка присваивания
 {
 	if (this == &obj)
@@ -194,7 +194,7 @@ Student &Student ::operator= (const Student &obj) //перегрузка при�
 		initials = NULL;
 		initials = new char[size + 1];
 		strcpy(initials, obj.initials);
-		for (int i = 0; i < NUMO; i++)
+		for (int i = 0; i < NUM_OF_MARKS; i++)
 		{
 			A[i] = obj.A[i];
 		}
