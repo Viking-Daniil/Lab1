@@ -1,7 +1,7 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 #include <iostream>
-#define NUMO 2
+#define NUM_OF_MARKS 5 // Количество элементов массива оценок
 using namespace std;
 class Student
 {
@@ -9,7 +9,7 @@ private:
 
 	char *initials;//Указатель на строку, в которой содержится информация о ФИО
 	int number;//Номер группы
-	int A[NUMO]; //Массив оценок
+	int A[NUM_OF_MARKS]; //Массив оценок
 
 public:
 
